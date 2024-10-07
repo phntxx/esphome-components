@@ -55,7 +55,7 @@ namespace esphome
               // ESP_LOGD("DEBUG", "Height 1 is EMPTY -> 0x%02x", incomingByte);
               // deskSerial.write(command_wakeup, sizeof(command_wakeup));
             }
-            else if (this->hey_to_int_(incomingByte) == 0)
+            else if (this->hex_to_int_(incomingByte) == 0)
             {
               // ESP_LOGD("DEBUG", "Invalid height 1 -> 0x%02x", incomingByte);
               // deskSerial.write(command_wakeup, sizeof(command_wakeup));
@@ -82,9 +82,9 @@ namespace esphome
         {
           if (this->valid_ == true)
           {
-            int height1 = this->hey_to_int_(this->history_[1]) * 100;
-            int height2 = this->hey_to_int_(this->history_[0]) * 10;
-            int height3 = this->hey_to_int_(incomingByte);
+            int height1 = this->hex_to_int_(this->history_[1]) * 100;
+            int height2 = this->hex_to_int_(this->history_[0]) * 10;
+            int height3 = this->hex_to_int_(incomingByte);
             if (height2 != 100)
             {
               float finalHeight = height1 + height2 + height3;
@@ -137,7 +137,7 @@ namespace esphome
       return (b & 0x80) == 0x80;
     }
 
-    int LoctekComponent::hey_to_int_(byte s)
+    int LoctekComponent::hex_to_int_(byte s)
     {
       std::bitset<8> b(s);
 
