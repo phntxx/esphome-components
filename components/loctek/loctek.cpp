@@ -97,7 +97,7 @@ namespace esphome
     {
       if (this->msg_type_ == 0x12 && (this->msg_len_ == 7 || this->msg_len_ == 10))
       {
-        if (b == 0 || this->hex_to_int(b) == 0)
+        if (b == 0 || this->hex_to_int_(b) == 0)
         {
           // Invalid height, handle accordingly (logging or command wakeup could be added here)
         }
@@ -118,14 +118,14 @@ namespace esphome
 
     void LoctekComponent::calculate_height_(byte b)
     {
-      int height1 = this->hex_to_int(this->history_[1]) * 100;
-      int height2 = this->hex_to_int(this->history_[0]) * 10;
-      int height3 = this->hex_to_int(b);
+      int height1 = this->hex_to_int_(this->history_[1]) * 100;
+      int height2 = this->hex_to_int_(this->history_[0]) * 10;
+      int height3 = this->hex_to_int_(b);
 
       if (height2 != 100)
       {
         float finalHeight = height1 + height2 + height3;
-        if (this->is_decimal(this->history_[0]))
+        if (this->is_decimal_(this->history_[0]))
         {
           finalHeight /= 10;
         }
